@@ -67,7 +67,8 @@ public class EmailAuthenticatorForm implements Authenticator {
 
     @Override
     public void action(AuthenticationFlowContext context) {
-        MultivaluedMap<String, String> formData = context.getHttpRequest().getDecodedFormParameters();
+
+        MultivaluedMap<String, String> formData = org.keycloak.common.util.Resteasy.getContextData(org.jboss.resteasy.spi.HttpRequest.class).getDecodedFormParameters();
         if (formData.containsKey("resend")) {
             resetEmailCode(context);
             challenge(context, null);
